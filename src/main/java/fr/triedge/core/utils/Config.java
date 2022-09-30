@@ -1,26 +1,20 @@
 package fr.triedge.core.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public class Config extends Properties {
     private static Config instance;
     public static Config getInstance(){
-        if (instance == null)
+        if (instance == null){
             instance = new Config();
-        return instance;
-    }
-
-    static{
-        try {
-            Config.getInstance().load(Config.class.getResourceAsStream("/application.properties"));
-            System.out.println("Config loaded");
-        } catch (IOException e) {
-            //throw new RuntimeException(e);
-            System.err.println("Could not load config"+ e.getMessage());
+            try {
+                instance.load(Config.class.getResourceAsStream("/application.properties"));
+            } catch (IOException e) {
+                throw new RuntimeException("Could not load config", e);
+            }
         }
+        return instance;
     }
 
     public static final String DB_HOST                                  = "db.host";

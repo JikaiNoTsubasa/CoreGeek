@@ -1,4 +1,4 @@
-package fr.triedge.core.action;
+package fr.triedge.core.controllers;
 
 public class WelcomeUserAction {
 
