@@ -1,5 +1,8 @@
 package fr.triedge.core.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class User {
 
     private int id;
@@ -7,6 +10,17 @@ public class User {
     private String email;
     private String password;
     private String description;
+    private String image;
+
+    public User(){}
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public int getId() {
         return id;

@@ -13,7 +13,7 @@ public class SecurityInterceptor extends AbstractInterceptor {
             System.out.println("User not authenticated");
             return "login";
         }
-        System.out.println("User already authenticated");
+        //System.out.println("User already authenticated");
 
         return inv.invoke();
     }

@@ -5,6 +5,7 @@ import fr.triedge.core.utils.Config;
 import fr.triedge.core.utils.PWDManager;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DB {
 
@@ -73,5 +74,24 @@ public class DB {
         stmt.close();
 
         return user;
+    }
+
+    public ArrayList<User> getAllUsers() throws SQLException {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "select * from cg_user u left join cg_sex sex on u.sex=sex.id left join cg_eye_color eye on u.eye=eye.id";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            User u = new User();
+            u.setId(res.getInt("u.id"));
+            u.setPseudo(res.getString("pseudo"));
+            u.setEmail(res.getString("email"));
+            u.setDescription(res.getString("description"));
+            u.setImage(res.getString("img"));
+            users.add(u);
+        }
+        res.close();
+        stmt.close();
+        return users;
     }
 }

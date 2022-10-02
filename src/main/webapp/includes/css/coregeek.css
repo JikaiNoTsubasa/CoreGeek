@@ -66,3 +66,22 @@ body{
     border-bottom: 1px solid var(--link);
 
 }
+
+.cg-portrait{
+    margin: 5px;
+    width: 120px;
+    height: 400px;
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid black;
+}
+
+.cg-portrait:hover{
+    transform:scale(1.1);
+}
+
+.cg-portrait-content{
+    border: 1px solid red;
+    width: 100%;
+    height: 100%;
+}

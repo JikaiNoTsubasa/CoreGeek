@@ -14,5 +14,26 @@
   </div>
 
 <img src="file/user/user1.png" width="100px">
+  <div class="cg-container">
+    <s:iterator step="1" var="i" value="users">
+      <div class="cg-portrait">
+        <div class="cg-portrait-content" style="background: url('file/<s:property value="image"></s:property>') no-repeat; background-position: top; background-size: cover">
+        </div>
+      </div>
+    </s:iterator>
+    <div class="cg-portrait">
+      <div class="cg-portrait-content" style="background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq9rBu2pG8XhDelxsJiXbbvNldYsFADH8LyGvzXtDtNQ&s') no-repeat; background-position: top; background-size: cover">
+      </div>
+    </div>
+    <div class="cg-portrait">
+      <div class="cg-portrait-content">content here</div>
+    </div>
+    <div class="cg-portrait">
+      <div class="cg-portrait-content">content here</div>
+    </div>
+    <div class="cg-portrait">
+      <div class="cg-portrait-content">content here</div>
+    </div>
+  </div>
 </body>
 </html>
