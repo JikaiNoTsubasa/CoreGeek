@@ -11,17 +11,26 @@
             <interceptor-stack name="myStack">
                 <interceptor-ref name="params"/>
                 <interceptor-ref name="secuInterceptor" />
+                <interceptor-ref name="cookie">
+                    <param name="cookiesName">*</param>
+                    <param name="cookiesValue">*</param>
+                </interceptor-ref>
             </interceptor-stack>
         </interceptors>
         <default-interceptor-ref name="myStack"></default-interceptor-ref>
 
         <global-results>
-            <result name="login">/login.jsp</result>
+            <result name="welcome">/welcome.jsp</result>
             <result name="failed">/failed.jsp</result>
         </global-results>
 
+        <action name="login" class="fr.triedge.core.controllers.LoginAction" method="execute">
+            <result name="success">/login.jsp</result>
+        </action>
+
         <action name="index" class="fr.triedge.core.controllers.IndexAction" method="execute">
             <result name="success">/index.jsp</result>
+            <result name="welcome">/welcome.jsp</result>
         </action>
 
         <action name="user" class="fr.triedge.core.controllers.UserAction" method="execute">
@@ -30,7 +39,15 @@
 
         <action name="register" class="fr.triedge.core.controllers.LoginAction" method="processForm">
             <result name="askLogin">/login.jsp</result>
-            <result name="success" type="chain">index</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
+        </action>
+
+        <action name="disconnect" class="fr.triedge.core.controllers.DisconnectAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
         </action>
 
     </package>

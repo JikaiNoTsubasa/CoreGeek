@@ -1,27 +1,38 @@
 package fr.triedge.core.controllers;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.sun.net.httpserver.Authenticator;
 import fr.triedge.core.db.DB;
+import fr.triedge.core.model.Message;
 import fr.triedge.core.model.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class IndexAction {
+public class IndexAction extends StrutsAction{
 
     private User user;
     private ArrayList<User> users;
 
+    private ArrayList<Message> messages;
 
-    public String execute(){
+    @Override
+    public String perform(String action) {
+        System.out.println("Execute Index Action");
         user = (User) ActionContext.getContext().getSession().get("user");
+        if (user == null){
+            System.out.println("User not logged, displaying welcome");
+            return "welcome";
+        }
+        System.out.println("User logged, displaying index");
         try {
             users = DB.getInstance().getAllUsers();
+            messages = DB.getInstance().getMessages(user.getId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return "success";
+        return SUCCESS;
     }
 
     public ArrayList<User> getUsers() {
@@ -38,5 +49,13 @@ public class IndexAction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 }

@@ -6,17 +6,15 @@ import fr.triedge.core.model.User;
 
 import java.sql.SQLException;
 
-public class LoginAction {
+public class LoginAction extends StrutsAction{
     private String strutsLoginName;
     private String strutsLoginPassword;
 
     private String strutsAction;
 
-    public String execute(){
-
-
-        return "success";
-        //return "askLogin";
+    @Override
+    public String perform(String action) {
+        return SUCCESS;
     }
 
     public String processForm(){

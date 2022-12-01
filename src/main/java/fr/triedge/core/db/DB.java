@@ -1,5 +1,6 @@
 package fr.triedge.core.db;
 
+import fr.triedge.core.model.Message;
 import fr.triedge.core.model.User;
 import fr.triedge.core.utils.Config;
 import fr.triedge.core.utils.PWDManager;
@@ -93,5 +94,40 @@ public class DB {
         res.close();
         stmt.close();
         return users;
+    }
+
+    public ArrayList<Message> getMessages(int receiver) throws SQLException {
+        ArrayList<Message> mess = new ArrayList<>();
+        String sql = "select * from cg_message m left join cg_user r on m.receiver=r.id left join cg_user s on m.sender=s.id where receiver=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1, receiver);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            Message m = new Message();
+            m.setId(res.getInt("m.id"));
+            m.setContent(res.getString("m.content"));
+            m.setDate(new Date(res.getTimestamp("m.creation").getTime()));
+
+            // Receiver
+            User r = new User();
+            r.setId(res.getInt("r.id"));
+            r.setPseudo(res.getString("r.pseudo"));
+            r.setEmail(res.getString("r.email"));
+            r.setDescription(res.getString("r.description"));
+            r.setImage(res.getString("r.img"));
+            m.setReceiver(r);
+
+            // Sender
+            User s = new User();
+            s.setId(res.getInt("s.id"));
+            s.setPseudo(res.getString("s.pseudo"));
+            s.setEmail(res.getString("s.email"));
+            s.setDescription(res.getString("s.description"));
+            s.setImage(res.getString("s.img"));
+            m.setSender(r);
+
+            mess.add(m);
+        }
+        return mess;
     }
 }

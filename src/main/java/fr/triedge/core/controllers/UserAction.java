@@ -1,8 +1,8 @@
 package fr.triedge.core.controllers;
 
-public class UserAction {
-
-    public String execute(){
-        return "success";
+public class UserAction extends StrutsAction{
+    @Override
+    public String perform(String action) {
+        return SUCCESS;
     }
 }

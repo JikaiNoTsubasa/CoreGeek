@@ -64,6 +64,19 @@ create table cg_user(
     CONSTRAINT fk_user_interested FOREIGN KEY (interested) REFERENCES cg_sex(id)
 );
 
+create table cg_message(
+   id                      int NOT NULL AUTO_INCREMENT,
+   sender                  int not null,
+   receiver                int not null,
+   creation                timestamp default CURRENT_TIMESTAMP not null,
+   content                 text not null,
+   PRIMARY KEY (id),
+   CONSTRAINT fk_sender_user FOREIGN KEY (sender) REFERENCES cg_user(id),
+   CONSTRAINT fk_receiver_user FOREIGN KEY (receiver) REFERENCES cg_user(id)
+);
+
+insert into cg_user(pseudo, email, password, img)values('Dummy', 'dummy@coregeek.com','dummy', 'user/default_user.png');
+
 insert into cg_role (id, name)
 values
     (1, 'User'),
