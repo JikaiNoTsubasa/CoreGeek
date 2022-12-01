@@ -12,7 +12,35 @@ public class User {
     private String description;
     private String image;
 
+    private Eye eyeColor;
+    private Role role;
+    private Sex sex;
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public User(){}
+
+    public Eye getEyeColor() {
+        return eyeColor;
+    }
+
+    public void setEyeColor(Eye eyeColor) {
+        this.eyeColor = eyeColor;
+    }
 
     public String getImage() {
         return image;

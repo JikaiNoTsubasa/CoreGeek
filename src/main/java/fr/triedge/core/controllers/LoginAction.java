@@ -3,6 +3,7 @@ package fr.triedge.core.controllers;
 import com.opensymphony.xwork2.ActionContext;
 import fr.triedge.core.db.DB;
 import fr.triedge.core.model.User;
+import fr.triedge.core.utils.Utils;
 
 import java.sql.SQLException;
 
@@ -22,7 +23,7 @@ public class LoginAction extends StrutsAction{
             try {
                 User user = DB.getInstance().loginUser(getStrutsLoginName(), getStrutsLoginPassword(), true);
                 if (user != null){
-                    ActionContext.getContext().getSession().put("user", user);
+                    Utils.loginUser(user);
                     //System.out.println("Login success");
                     return "success";
                 }else{

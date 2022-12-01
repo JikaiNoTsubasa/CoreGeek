@@ -5,6 +5,7 @@ import com.sun.net.httpserver.Authenticator;
 import fr.triedge.core.db.DB;
 import fr.triedge.core.model.Message;
 import fr.triedge.core.model.User;
+import fr.triedge.core.utils.Utils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class IndexAction extends StrutsAction{
     @Override
     public String perform(String action) {
         System.out.println("Execute Index Action");
-        user = (User) ActionContext.getContext().getSession().get("user");
+        user = Utils.getUser();
         if (user == null){
             System.out.println("User not logged, displaying welcome");
             return "welcome";

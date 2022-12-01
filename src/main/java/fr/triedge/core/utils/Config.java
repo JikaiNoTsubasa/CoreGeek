@@ -17,7 +17,7 @@ public class Config extends Properties {
         return instance;
     }
 
-    private String[] publicActions = new String[]{"welcome","","login","register"};
+    private String[] publicActions = new String[]{"welcome","","login","register","inscription"};
 
     public static final String DB_HOST                                  = "db.host";
     public static final String DB_USER                                  = "db.user";

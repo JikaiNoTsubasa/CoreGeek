@@ -1,7 +1,6 @@
 package fr.triedge.core.db;
 
-import fr.triedge.core.model.Message;
-import fr.triedge.core.model.User;
+import fr.triedge.core.model.*;
 import fr.triedge.core.utils.Config;
 import fr.triedge.core.utils.PWDManager;
 
@@ -77,7 +76,36 @@ public class DB {
         return user;
     }
 
+    public User registerUser(String email, String password, String pseudo, boolean isEncrypted) throws SQLException {
+        String pwd = password;
+        if (isEncrypted)
+            pwd = new PWDManager().encode(password);
+        String sql = "insert into cg_user(pseudo, email, password)values(?,?,?)";
+        PreparedStatement stmt = getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        stmt.setString((int)1,pseudo);
+        stmt.setString((int)2,email);
+        stmt.setString((int)3,password);
+        stmt.executeUpdate();
+        ResultSet res = stmt.getGeneratedKeys();
+        int id = -1;
+        while(res.next()){
+            id = res.getInt(1);
+        }
+        return getUser(id);
+    }
+
     public ArrayList<User> getAllUsers() throws SQLException {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "select id from cg_user";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            users.add(getUser(res.getInt("id")));
+        }
+        res.close();
+        stmt.close();
+        return users;
+        /*
         ArrayList<User> users = new ArrayList<>();
         String sql = "select * from cg_user u left join cg_sex sex on u.sex=sex.id left join cg_eye_color eye on u.eye=eye.id";
         PreparedStatement stmt = getConnection().prepareStatement(sql);
@@ -94,6 +122,41 @@ public class DB {
         res.close();
         stmt.close();
         return users;
+
+         */
+    }
+
+    public User getUser(int id) throws SQLException {
+        User u = new User();
+        String sql = "select * from cg_user u left join cg_sex sex on u.sex=sex.id left join cg_eye_color eye on u.eye=eye.id left join cg_role ro on u.role=ro.id where u.id=?";
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        stmt.setInt((int)1,id);
+        ResultSet res = stmt.executeQuery();
+        while (res.next()){
+            u.setId(res.getInt("u.id"));
+            u.setPseudo(res.getString("pseudo"));
+            u.setEmail(res.getString("email"));
+            u.setDescription(res.getString("description"));
+            u.setImage(res.getString("img"));
+
+            Eye eye = new Eye();
+            eye.setId(res.getInt("eye.id"));
+            eye.setName(res.getString("eye.name"));
+            u.setEyeColor(eye);
+
+            Sex sex = new Sex();
+            sex.setId(res.getInt("sex.id"));
+            sex.setName(res.getString("sex.name"));
+            u.setSex(sex);
+
+            Role role = new Role();
+            role.setId(res.getInt("ro.id"));
+            role.setName(res.getString("ro.name"));
+            u.setRole(role);
+        }
+        res.close();
+        stmt.close();
+        return u;
     }
 
     public ArrayList<Message> getMessages(int receiver) throws SQLException {

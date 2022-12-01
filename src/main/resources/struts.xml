@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-        "struts-2.5.dtd">
+        "https://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
 
@@ -15,6 +15,8 @@
                     <param name="cookiesName">*</param>
                     <param name="cookiesValue">*</param>
                 </interceptor-ref>
+                <interceptor-ref name="validation"/>
+                <interceptor-ref name="workflow"/>
             </interceptor-stack>
         </interceptors>
         <default-interceptor-ref name="myStack"></default-interceptor-ref>
@@ -39,6 +41,13 @@
 
         <action name="register" class="fr.triedge.core.controllers.LoginAction" method="processForm">
             <result name="askLogin">/login.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
+        </action>
+
+        <action name="inscription" class="fr.triedge.core.controllers.InscriptionAction">
+            <result name="inscriptionForm">/inscriptionForm.jsp</result>
             <result name="success" type="redirectAction">
                 <param name="actionName">index</param>
             </result>

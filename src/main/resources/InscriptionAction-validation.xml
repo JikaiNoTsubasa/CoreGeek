@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+<validators>
+
+    <field name="strutsEmail">
+        <field-validator type="required">
+            <message>Veuillez entrer un Email.</message>
+        </field-validator>
+        <field-validator type="email">
+            <message>Veuillez entrer un email valide.</message>
+        </field-validator>
+    </field>
+
+    <field name="strutsPseudo">
+        <field-validator type="required">
+            <message>Veuillez entrer un Pseudo.</message>
+        </field-validator>
+    </field>
+
+    <field name="strutsPassword">
+        <field-validator type="required">
+            <message>Veuillez entrer un Mot de Passe.</message>
+        </field-validator>
+    </field>
+
+
+</validators>
